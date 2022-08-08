@@ -50,6 +50,14 @@ private extension DogListViewController {
         }
     }
     
+    func rename(_ dog: Dog, to name: String) {
+        let realm = try? Realm()
+        try? realm?.write {
+            // 犬の名前(Dog.name)を更新
+            dog.name = name
+        }
+    }
+    
     func dataReload() {
         let realm = try? Realm()
         // 現在表示してる飼い主データ(Person)は保有する犬データ(Person.dogs)が追加される前の状態のため更新する
@@ -59,6 +67,34 @@ private extension DogListViewController {
         // 取得した新しい飼い主データ(Person)でpersonプロパティを更新
         person = result
         tableView.reloadData()
+    }
+    
+    func showEditAlert(with dog: Dog) {
+        let alert = UIAlertController(title:"犬の名前を入力してください",
+                                      message: "",
+                                      preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .cancel,
+                                         handler: { (action: UIAlertAction!) -> Void in
+        })
+        let defaultAction = UIAlertAction(title: "Add",
+                                          style: .default,
+                                          handler: { (action: UIAlertAction!) -> Void in
+            // UIAlertController上のUITextFidleから文字列を取得
+            guard let text = alert.textFields?.first?.text else { return }
+            self.rename(dog, to: text)
+            self.dataReload()
+        })
+        alert.addAction(cancelAction)
+        alert.addAction(defaultAction)
+        
+        // UIAlertControllerに表示するUITextField
+        alert.addTextField(configurationHandler: {(text: UITextField!) -> Void in
+        })
+        // 渡された犬の名前(Dog.name)をUITaxtFieldに表示
+        alert.textFields?.first?.text = dog.name
+        present(alert, animated: true)
     }
 }
 
@@ -90,7 +126,17 @@ private extension DogListViewController {
     }
 }
 
-extension DogListViewController: UITableViewDelegate {}
+extension DogListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // タップされたCellに該当する犬データ(Dog)を取得
+        if let dog = person?.dogs[indexPath.row] {
+            // 取得した犬データ(Dog)を使ってデータ編集アラートを表示
+            showEditAlert(with: dog)
+        }
+        // タップされたCellの選択状態を解除
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
 
 extension DogListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
