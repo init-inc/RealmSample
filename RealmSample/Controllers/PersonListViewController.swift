@@ -65,8 +65,11 @@ private extension PersonListViewController {
         present(alert, animated: true)
     }
     
-    func transitionToAddData() {
+    func transitionToAddData(with person: Person) {
         let editViewController = DogListViewController()
+        // 画面遷移する際に選択された飼い主データ(Person)を渡す
+        editViewController.person = person
+        // UINavigationControllerを使って画面遷移
         navigationController?.pushViewController(editViewController, animated: true)
     }
     
@@ -81,7 +84,14 @@ private extension PersonListViewController {
 }
 
 extension PersonListViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // タップされたCellの飼い主データ(Person)を取得
+        let person = dataList[indexPath.row]
+        // 飼い主データ(Person)を使って画面遷移させる
+        transitionToAddData(with: person)
+        // タップされたCellの選択状態を解除
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 extension PersonListViewController: UITableViewDataSource {
