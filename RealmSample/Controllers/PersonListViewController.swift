@@ -81,6 +81,14 @@ private extension PersonListViewController {
             realm?.add(newPerson)
         }
     }
+    
+    func delete(_ preson: Person) {
+        let realm = try? Realm()
+        try? realm?.write {
+            // 既存の飼い主データ(Person)を削除
+            realm?.delete(preson)
+        }
+    }
 }
 
 extension PersonListViewController: UITableViewDelegate {
@@ -107,5 +115,28 @@ extension PersonListViewController: UITableViewDataSource {
         // Cellタイトルにはの飼い主の名前(Person.name)を表示
         cell.textLabel?.text = person.name
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // UITableViewを横スワイプで操作できるようにするフラグ
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            // 削除対象の飼い主データ(Person)を取得
+            let person = dataList[indexPath.row]
+            delete(person)
+            dataList.remove(at: indexPath.row)
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
+            // 飼い主データ削除後にUITableViewを更新
+            dataReload()
+        default:
+            // 削除以外の場合は操作しないのでbreak
+            break
+        }
     }
 }
