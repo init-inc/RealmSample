@@ -47,7 +47,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="ホーム" id="jfz-uU-7Xh">
-                        <barButtonItem key="rightBarButtonItem" title="データ追加" id="che-L9-EiN"/>
+                        <barButtonItem key="rightBarButtonItem" title="データ追加" id="che-L9-EiN">
+                            <connections>
+                                <action selector="addDataButton:" destination="BYZ-38-t0r" id="0ms-k0-Cgx"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="HPg-qA-r5L" id="G05-N5-DvC"/>

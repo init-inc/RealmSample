@@ -10,6 +10,9 @@ import RealmSwift
 
 class ViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
+    @IBAction func addDataButton(_ sender: UIBarButtonItem) {
+        transitionToAddData()
+    }
     
     private var dataList: [Person] = []
     
@@ -30,6 +33,11 @@ private extension ViewController {
         guard let result = realm?.objects(Person.self) else { return }
         dataList = Array(result)
         tableView.reloadData()
+    }
+    
+    func transitionToAddData() {
+        let editViewController = EditDataViewController()
+        navigationController?.pushViewController(editViewController, animated: true)
     }
 }
 
