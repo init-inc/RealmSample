@@ -30,6 +30,7 @@ private extension DogListViewController {
     func configure() {
         tableView.delegate = self
         tableView.dataSource = self
+        navigationItem.title = person?.name
     }
 }
 
