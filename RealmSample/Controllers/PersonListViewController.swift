@@ -66,7 +66,7 @@ private extension PersonListViewController {
     }
     
     func transitionToAddData() {
-        let editViewController = EditDataViewController()
+        let editViewController = DogListViewController()
         navigationController?.pushViewController(editViewController, animated: true)
     }
     

@@ -1,5 +1,5 @@
 //
-//  EditDataViewController.swift
+//  DogListViewController.swift
 //  RealmSample
 //
 //  Created by Taku Yamada on 2022/08/08.
