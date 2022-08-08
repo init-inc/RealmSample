@@ -107,8 +107,12 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        let person = dataList[indexPath.row]
-        cell.textLabel?.text = person.name
+        // Section→Personの単位のため、indexPath.sectionを使って対象SectionのPersonを取得
+        let person = dataList[indexPath.section]
+        // Cell→Dogsの単位のため、indexPath.rowを使って対象CellのDogを取得
+        let dog = person.dogs[indexPath.row]
+        // Cellタイトルには犬の名前を表示
+        cell.textLabel?.text = dog.name
         return cell
     }
 }
