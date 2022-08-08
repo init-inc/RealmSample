@@ -32,9 +32,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="HPg-qA-r5L">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="HPg-qA-r5L">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -46,7 +45,7 @@
                             <constraint firstItem="HPg-qA-r5L" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="iSW-oR-r3s"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="jfz-uU-7Xh">
+                    <navigationItem key="navigationItem" title="飼い主一覧" id="jfz-uU-7Xh">
                         <barButtonItem key="rightBarButtonItem" title="＋追加" id="che-L9-EiN">
                             <connections>
                                 <action selector="addDataButton:" destination="BYZ-38-t0r" id="0ms-k0-Cgx"/>

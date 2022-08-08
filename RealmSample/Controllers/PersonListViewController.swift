@@ -85,34 +85,17 @@ extension PersonListViewController: UITableViewDelegate {
 }
 
 extension PersonListViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        // Section高さが足りずに文字れが見切れるので高さを調整
-        return 40
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        // Sectionタイトルを表示するため、表示対象Sectionに該当するPersonを取得
-        let person = dataList[section]
-        // 対象SectionのタイトルとしてPerson.nameを表示
-        return person.name
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // まずはSectionの概念に相当するPersonを取得
-        let person = dataList[section]
-        // Person毎に保有するDogの数(=dogs)が異なるため
-        // 取得したPersonに紐づくdogs.countをセルのカウントとして返す
-        return person.dogs.count
+        // 飼い主(Person)の数だけCellを表示させる
+        return dataList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        // Section→Personの単位のため、indexPath.sectionを使って対象SectionのPersonを取得
-        let person = dataList[indexPath.section]
-        // Cell→Dogsの単位のため、indexPath.rowを使って対象CellのDogを取得
-        let dog = person.dogs[indexPath.row]
-        // Cellタイトルには犬の名前を表示
-        cell.textLabel?.text = dog.name
+        // indexPath.rowを使って対象CellのPersonを取得
+        let person = dataList[indexPath.row]
+        // Cellタイトルにはの飼い主の名前(Person.name)を表示
+        cell.textLabel?.text = person.name
         return cell
     }
 }
