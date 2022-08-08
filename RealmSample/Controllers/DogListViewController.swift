@@ -58,6 +58,14 @@ private extension DogListViewController {
         }
     }
     
+    func delete(_ dog: Dog) {
+        let realm = try? Realm()
+        try? realm?.write {
+            // 既存の犬データ(Dog)を削除
+            realm?.delete(dog)
+        }
+    }
+    
     func dataReload() {
         let realm = try? Realm()
         // 現在表示してる飼い主データ(Person)は保有する犬データ(Person.dogs)が追加される前の状態のため更新する
@@ -151,5 +159,28 @@ extension DogListViewController: UITableViewDataSource {
         // Cellのタイトルラベルに犬の名前を代入
         cell.textLabel?.text = dog?.name
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // UITableViewを横スワイプで操作できるようにするフラグ
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            // 削除対象の犬データ(Dogs)を飼い主の保有する犬(Person.dogs)から取得
+            if let dog = person?.dogs[indexPath.row] {
+                delete(dog)
+            }
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
+            // 犬データ削除後にUITableViewを更新
+            dataReload()
+        default:
+            // 削除以外の場合は操作しないのでbreak
+            break
+        }
     }
 }
