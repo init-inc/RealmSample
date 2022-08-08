@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  PersonListViewController.swift
 //  RealmSample
 //
 //  Created by Taku Yamada on 2022/08/08.
@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class ViewController: UIViewController {
+class PersonListViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBAction func addDataButton(_ sender: UIBarButtonItem) {
         showAddPersonAlert()
@@ -26,7 +26,7 @@ class ViewController: UIViewController {
     }
 }
 
-private extension ViewController {
+private extension PersonListViewController {
     func configure() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -80,11 +80,11 @@ private extension ViewController {
     }
 }
 
-extension ViewController: UITableViewDelegate {
+extension PersonListViewController: UITableViewDelegate {
     
 }
 
-extension ViewController: UITableViewDataSource {
+extension PersonListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         // Section高さが足りずに文字れが見切れるので高さを調整
         return 40
