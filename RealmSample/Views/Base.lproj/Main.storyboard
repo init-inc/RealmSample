@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MO4-qU-XBo">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -28,11 +29,11 @@
             <objects>
                 <viewController title="ホーム" id="BYZ-38-t0r" customClass="PersonListViewController" customModule="RealmSample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="HPg-qA-r5L">
-                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -45,8 +46,8 @@
                             <constraint firstItem="HPg-qA-r5L" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="iSW-oR-r3s"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="ホーム" id="jfz-uU-7Xh">
-                        <barButtonItem key="rightBarButtonItem" title="データ追加" id="che-L9-EiN">
+                    <navigationItem key="navigationItem" id="jfz-uU-7Xh">
+                        <barButtonItem key="rightBarButtonItem" title="＋追加" id="che-L9-EiN">
                             <connections>
                                 <action selector="addDataButton:" destination="BYZ-38-t0r" id="0ms-k0-Cgx"/>
                             </connections>

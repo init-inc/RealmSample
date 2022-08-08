@@ -7,9 +7,9 @@
 
 import UIKit
 
-class EditDataViewController: UIViewController {
+class DogListViewController: UIViewController {
     init() {
-        super.init(nibName: String(describing: EditDataViewController.self), bundle: nil)
+        super.init(nibName: String(describing: DogListViewController.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
