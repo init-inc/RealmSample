@@ -45,14 +45,18 @@ private extension DogListViewController {
         try? realm?.write {
             let newDog = Dog()
             newDog.name = name
+            // 現在表示している飼い主が保有する犬(Person.dogs)にデータを新しい犬のデータを追加
             person?.dogs.append(newDog)
         }
     }
     
     func dataReload() {
         let realm = try? Realm()
+        // 現在表示してる飼い主データ(Person)は保有する犬データ(Person.dogs)が追加される前の状態のため更新する
+        // 現在表示している飼い主のID(Person.id)を使ってRealmから既存データを取得
         guard let id = person?.id,
               let result = realm?.objects(Person.self).filter("id == %@", id).first else { return }
+        // 取得した新しい飼い主データ(Person)でpersonプロパティを更新
         person = result
         tableView.reloadData()
     }
