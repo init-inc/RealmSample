@@ -85,6 +85,10 @@ private extension PersonListViewController {
     func delete(_ preson: Person) {
         let realm = try? Realm()
         try? realm?.write {
+            // 飼い主データ(Person)を削除する際に飼い主に紐づく犬データ(Person.dogs)も削除
+            preson.dogs.forEach { dog in
+                realm?.delete(dog)
+            }
             // 既存の飼い主データ(Person)を削除
             realm?.delete(preson)
         }
