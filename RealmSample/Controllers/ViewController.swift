@@ -11,14 +11,18 @@ import RealmSwift
 class ViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBAction func addDataButton(_ sender: UIBarButtonItem) {
-        transitionToAddData()
+        showAddPersonAlert()
     }
     
     private var dataList: [Person] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configure()
         dataReload()
+        // Realm内に保存されているデータを「Realm Studio」で確認するために
+        // Realmデータが保存されているファイルのパスを出力
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
 }
 
@@ -35,9 +39,44 @@ private extension ViewController {
         tableView.reloadData()
     }
     
+    func showAddPersonAlert() {
+        let alert = UIAlertController(title:"所有者名を入力してください",
+                                      message: "",
+                                      preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .cancel,
+                                         handler: { (action: UIAlertAction!) -> Void in
+        })
+        let defaultAction = UIAlertAction(title: "Add",
+                                          style: .default,
+                                          handler: { (action: UIAlertAction!) -> Void in
+            // UIAlertController上のUITextFidleから文字列を取得
+            guard let text = alert.textFields?.first?.text else { return }
+            self.add(person: text)
+            self.dataReload()
+        })
+        alert.addAction(cancelAction)
+        alert.addAction(defaultAction)
+        
+        // UIAlertControllerに表示するUITextField
+        alert.addTextField(configurationHandler: {(text: UITextField!) -> Void in
+        })
+        present(alert, animated: true)
+    }
+    
     func transitionToAddData() {
         let editViewController = EditDataViewController()
         navigationController?.pushViewController(editViewController, animated: true)
+    }
+    
+    func add(person name: String) {
+        let realm = try? Realm()
+        try? realm?.write {
+            let newPerson = Person()
+            newPerson.name = name
+            realm?.add(newPerson)
+        }
     }
 }
 
@@ -46,6 +85,18 @@ extension ViewController: UITableViewDelegate {
 }
 
 extension ViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        // Section高さが足りずに文字れが見切れるので高さを調整
+        return 40
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        // Sectionタイトルを表示するため、表示対象Sectionに該当するPersonを取得
+        let person = dataList[section]
+        // 対象SectionのタイトルとしてPerson.nameを表示
+        return person.name
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // まずはSectionの概念に相当するPersonを取得
         let person = dataList[section]
@@ -56,6 +107,8 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
+        let person = dataList[indexPath.row]
+        cell.textLabel?.text = person.name
         return cell
     }
 }
